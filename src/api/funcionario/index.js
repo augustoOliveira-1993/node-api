@@ -9,6 +9,8 @@ class FuncionarioRouter extends BaseRouter {
   initialize() {
     this.get('/', FuncionarioController.index)
     this.post('/', FuncionarioController.store)
+    this.delete('/', FuncionarioController.deleteFuncionario)
+    this.post('/', FuncionarioController.updateFuncionario)
   }
 }
 
