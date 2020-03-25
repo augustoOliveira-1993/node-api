@@ -19,8 +19,15 @@ class GithubuserController extends BaseResponse {
   }
 
   async store(req, res, next) {
+    const { username } = req.body
+    let dataGithubuser = ''
+
     try {
-      const dataGithubuser = await GithubuserModel.getGithubuser()
+      if (username) {
+        dataGithubuser = await GithubuserModel.getGithubuser(username)
+      } else {
+        dataGithubuser = await GithubuserModel.getGithubusers()
+      }
       //console.log(dataGithubuser)
       const data = await this.Githubuser.create(dataGithubuser)
       this.sendResponse(res, next, { status: 201, data })
