@@ -58,34 +58,33 @@ class FuncionarioController extends BaseResponse {
       }
     }
   }
-  async updateFuncionario(req, res, next){
+  async updateFuncionario(req, res, next) {
     try {
-      const {body} = req
-      if(body){
-        const params = {...body}
+      const { body } = req
+      if (body) {
+        const params = { ...body }
 
         delete params.id
         const data = await this.Funcionario.updateOne(
-          {_id: body.id},
-          {$set: params}
+          { _id: body.id },
+          { $set: params }
         )
         this.sendResponse(res, next, {
           status: 201,
           message: 'CLIENTE UPDATE',
           data,
         })
-      }else{
+      } else {
         this.sendError(res, next, {
           status: 401,
           message: 'ERROR ON UPDATE CLIENTE',
         })
       }
     } catch (error) {
-      this.sendError(res, next {
-        status:401,
+      this.sendError(res, next, {
+        status: 401,
         message: `ERROR - ${error}`,
       })
-
     }
   }
 }
