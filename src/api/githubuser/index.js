@@ -9,8 +9,9 @@ class GithubuserRouter extends BaseRouter {
 
   initialize() {
     this.get('/', GithubuserCrontroller.index)
-
     this.post('/', GithubuserCrontroller.store)
+    this.delete('/:id', GithubuserCrontroller.delteGithubuser)
+    this.put('/', GithubuserCrontroller.updateGithubuser)
   }
 }
 

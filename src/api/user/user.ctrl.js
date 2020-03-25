@@ -46,7 +46,7 @@ class UserController extends BaseResponse {
       const user = await this.User.findById(id)
       if (user) {
         try {
-          const data = await this.User.findByIdAndRemove(id)
+          const data = await this.User.findByIdAndRemove({ _id: id })
           this.sendResponse(res, next, { status: 201, data })
         } catch (error) {
           this.sendError(res, next, {

@@ -35,6 +35,57 @@ class GithubuserController extends BaseResponse {
       this.sendError(res, next, { status: 401, messages: error.message })
     }
   }
+
+  async delteGithubuser(req, res, next) {
+    const {
+      params: { id },
+    } = req
+    if (id) {
+      const githubuser = await this.Githubuser.findById(id)
+      if (githubuser) {
+        try {
+          const data = await this.Githubuser.findByIdAndRemove({ _id: id })
+          this.sendResponse(res, next, { status: 201, data })
+        } catch (error) {
+          this.sendError(res, next, {
+            status: 402,
+            messages: 'Error DELETE',
+          })
+        }
+      } else {
+        this.sendError(res, next, {
+          message: 'SET ID PARAMS!',
+          status: 402,
+        })
+      }
+    }
+  }
+  async updateGithubuser(req, res, next) {
+    try {
+      const { body } = req
+      if (body) {
+        const params = { ...body }
+
+        delete params.id
+        const data = await this.Githubuser.updateOne(
+          { _id: body.id },
+          { $set: params }
+        )
+        this.sendResponse(res, next, {
+          status: 201,
+          message: 'USER UPDATE',
+          data,
+        })
+      } else {
+        this.sendError(res, next, {
+          status: 401,
+          message: 'ERROR ON UPDATE USER',
+        })
+      }
+    } catch (error) {
+      this.sendError(res, next, { status: 401, message: `ERROR - ${error}` })
+    }
+  }
 }
 
 export default new GithubuserController()
